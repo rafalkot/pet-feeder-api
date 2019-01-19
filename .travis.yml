@@ -1,0 +1,20 @@
+language: php
+
+services:
+  - docker
+
+branches:
+  only:
+  - master
+  - develop
+
+before_install:
+  - make jwt-setup
+  - make up
+
+install:
+  - docker exec -it pet-feeder-php make install
+
+script:
+  - docker exec -it pet-feeder-php make cs
+  - docker exec -it pet-feeder-php make test

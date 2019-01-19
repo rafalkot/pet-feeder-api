@@ -1,5 +1,7 @@
 # Pet-feeder API
 
+[![Build Status](https://travis-ci.org/rafalkot/pet-feeder-api.svg?branch=master)](https://travis-ci.org/rafalkot/pet-feeder-api)
+
 Web API for mobile app - Pet feeder
 
 ## Getting started

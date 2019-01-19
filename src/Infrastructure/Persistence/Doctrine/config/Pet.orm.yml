@@ -1,0 +1,22 @@
+App\Domain\Pet:
+  type: entity
+  table: pet
+  id:
+    id:
+      type: pet_id
+  fields:
+    ownerId:
+      type: person_id
+    name:
+      type: string
+      length: 50
+    type:
+      type: pet_type
+      lenght: 10
+    gender:
+      type: gender
+      lenght: 10
+      nullable: true
+    birthYear:
+      columnDefinition: 'CHAR(4)'
+      nullable: true

@@ -1,0 +1,16 @@
+imports:
+  - { resource: services.yaml }
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  App\Tests\DataFixtures\Provider\:
+    resource: '../tests/DataFixtures/Provider/*'
+    tags: [ { name: nelmio_alice.faker.provider } ]
+
+  App\Tests\DataFixtures\Processor\:
+    resource: '../tests/DataFixtures/Processor/*'
+    tags: [ { name: fidry_alice_data_fixtures.processor } ]

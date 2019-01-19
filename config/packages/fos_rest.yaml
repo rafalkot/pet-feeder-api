@@ -1,0 +1,14 @@
+# Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
+fos_rest:
+#    service:
+#        serializer: fos_rest.serializer.jms
+    view:
+        view_response_listener: true
+#    param_fetcher_listener:  true
+#    allowed_methods_listener:  true
+#    routing_loader: true
+    format_listener:
+        rules:
+            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
+    serializer:
+        serialize_null: true

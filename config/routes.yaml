@@ -1,0 +1,32 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+api_login:
+    path: /api/login
+
+register:
+    path: /api/register
+    controller: App\Ui\Rest\Controller\PersonsController::postAction
+    methods: [POST]
+
+auth_validate_token:
+    path: /api/validateToken
+    controller: App\Ui\Rest\Controller\AuthController::validateTokenAction
+    prefix:  /api
+    methods: [GET]
+
+pets:
+    type:     rest
+    resource: App\Ui\Rest\Controller\PetsController
+    prefix:  /api
+
+tasks:
+    type:     rest
+    resource: App\Ui\Rest\Controller\TasksController
+    prefix:  /api
+
+scheduled_tasks:
+    type:     rest
+    resource: App\Ui\Rest\Controller\ScheduledtasksController
+    prefix:  /api

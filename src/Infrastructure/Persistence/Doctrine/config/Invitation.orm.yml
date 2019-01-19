@@ -1,0 +1,15 @@
+App\Domain\Invitation:
+  type: entity
+  table: household_invitations
+  id:
+    id:
+      type: invitation_id
+      unique: true
+  fields:
+    invitedPersonId:
+      type: person_id
+      column: person_id
+  manyToOne:
+    household:
+      targetEntity: App\Domain\Household
+      inversedBy: invitations

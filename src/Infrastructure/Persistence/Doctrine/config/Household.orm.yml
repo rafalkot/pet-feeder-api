@@ -1,0 +1,20 @@
+App\Domain\Household:
+  type: entity
+  table: households
+  id:
+    id:
+      type: household_id
+      unique: true
+  fields:
+    name:
+      type: string
+      length: 50
+  oneToMany:
+    occupants:
+      targetEntity: App\Domain\Occupant
+      mappedBy: household
+      cascade: [persist]
+    invitations:
+      targetEntity: App\Domain\Invitation
+      mappedBy: household
+      cascade: [persist]

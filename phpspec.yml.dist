@@ -1,0 +1,6 @@
+suites:
+    domain:
+        spec_path: ./tests/
+        spec_prefix: Spec
+        namespace: App\Domain
+        src_path: ./src

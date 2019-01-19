@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  php-fpm:
+    build: docker/php-fpm
+    ports:
+      - 9000:9000
+    volumes:
+      - nfsmount:/app
+
+  nginx:
+    build: docker/nginx
+    depends_on:
+      - php-fpm
+    ports:
+      - 80:80
+    volumes:
+      - nfsmount:/app
+      - ./docker/nginx/app.conf:/etc/nginx/conf.d/app.conf
+      - ./var/log/nginx:/var/log/nginx
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+    volumes:
+      - ./var/data/mysql:/var/lib/mysql
+
+volumes:
+  nfsmount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${PWD}"

@@ -1,0 +1,5 @@
+security:
+    encoders:
+        App\Domain\Person:
+          algorithm: bcrypt
+          cost: 4

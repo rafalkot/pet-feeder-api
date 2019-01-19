@@ -1,0 +1,16 @@
+App\Domain\Occupant:
+  type: entity
+  table: household_occupants
+  id:
+    id:
+      type: occupant_id
+      unique: true
+  fields:
+    personId:
+      type: person_id
+    isOwner:
+      type: boolean
+  manyToOne:
+    household:
+      targetEntity: App\Domain\Household
+      inversedBy: occupants

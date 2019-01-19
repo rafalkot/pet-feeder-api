@@ -1,0 +1,21 @@
+App\Domain\Person:
+                        type: entity
+                        table: persons
+                        id:
+                          id:
+                            type: person_id
+                            unique: true
+                        fields:
+                          username:
+                            type: string
+                            length: 50
+                            unique: true
+                          email:
+                            type: string
+                            length: 60
+                            column: email
+                            unique: true
+                          password:
+                            type: string
+                            length: 64
+                            column: password

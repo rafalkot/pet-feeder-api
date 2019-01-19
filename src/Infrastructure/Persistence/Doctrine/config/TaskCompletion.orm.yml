@@ -1,0 +1,13 @@
+App\Domain\TaskCompletion:
+  type: entity
+  table: task_completion
+  id:
+    id:
+      type: task_completion_id
+  fields:
+    taskId:
+      type: task_id
+    completedAt:
+      type: datetime_immutable
+    completedBy:
+      type: person_id

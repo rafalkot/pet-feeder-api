@@ -1,0 +1,45 @@
+nelmio_api_doc:
+    models: { use_jms: false }
+    documentation:
+        info:
+            title: Pet feeder
+            description: This is an awesome app!
+            version: 1.0.0
+        securityDefinitions:
+            api_key:
+                type: apiKey
+                description: Json Web Token
+                name:  Authorization
+                in: header
+            security:
+                - api_key: []
+        definitions:
+            ValidationError:
+                description: "Single validation error object"
+                type: object
+                properties:
+                    field:
+                        type: string
+                        example: Field name
+                    message:
+                        type: string
+                        example: Field error
+            ValidationErrorResponse:
+                description: "Response for validation errors"
+                type: object
+                properties:
+                    code:
+                       type: int
+                       example: 400
+                    message:
+                        type: string
+                        example: Validation error
+                    errors:
+                        type: array
+                        items:
+                            $ref: "#definitions/ValidationError"
+
+
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$)

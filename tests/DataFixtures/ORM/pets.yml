@@ -1,0 +1,17 @@
+App\Domain\Pet:
+  pet_1:
+    __factory: {'App\Domain\Pet::create': ['<petId(1)>', '<petType("cat")>', '@person_1->id()', 'Rocky']}
+    gender: '<petGender("m")>'
+    birthYear: 2017
+  pet_2:
+    __factory: {'App\Domain\Pet::create': ['<petId(2)>', '<petType("dog")>', '@person_2->id()', 'Tyson']}
+    gender: '<petGender("m")>'
+    birthYear: 2015
+  pet_3:
+    __factory: {'App\Domain\Pet::create': ['<petId(3)>', '<petType("cat")>', '@person_2->id()', 'Zoe']}
+    gender: '<petGender("f")>'
+    birthYear: 2018
+  pet_{4..10}:
+    __factory: {'App\Domain\Pet::create': ['<petId()>', '<petType()>', '@person_$current->id()', '<petName()>']}
+    gender: '<petGender()>'
+    birthYear: '<numberBetween(2012, 2019)>'

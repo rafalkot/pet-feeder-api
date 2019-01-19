@@ -1,0 +1,14 @@
+App\Domain\Task:
+  type: entity
+  table: task
+  id:
+    id:
+      type: task_id
+  fields:
+    petId:
+      type: pet_id
+    name:
+      type: string
+      length: 255
+    recurrenceRule:
+      type: recurrence_rule

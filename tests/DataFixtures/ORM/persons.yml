@@ -1,0 +1,12 @@
+App\Domain\Person:
+    person_1:
+        __factory: {'App\Domain\Person::register': ['<personId(1)>', 'person1', 'person1@example.com']}
+        password: password
+
+    person_2:
+        __factory: {'App\Domain\Person::register': ['<personId(2)>', 'person2', 'person2@example.com']}
+        password: password
+
+    person_{3..10}:
+        __factory: {'App\Domain\Person::register': ['<personId()>', 'person<current()>', 'person$current@example.com']}
+        password: password

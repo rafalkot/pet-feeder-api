@@ -14,18 +14,16 @@ Web API for mobile app - Pet feeder
 Clone repository into local environment
 
 ```
-git clone https://github.com/rafalkot/... pet-feeder-api
+git clone https://github.com/rafalkot/pet-feeder-api
 cd pet-feeder-api
-cp .env.dist .env
 ```
-Setup variables in .env file
-
-Build containers and login into
+Build containers and login into php-fpm
 
 ```
 make up
-make shell
-make install # run on container
+make jwt-setup
+make shell # login into php-fpm container
+make install # on php-fpm container
 ```
 
 ### Running the tests

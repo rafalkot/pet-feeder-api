@@ -27,7 +27,6 @@ help:
 JWT_DIRECTORY=$(shell dirname ${JWT_PRIVATE_KEY_PATH});
 
 install:
-	$(MAKE) jwt-setup
 	composer install
 	$(MAKE) db-setup
 	$(MAKE) fixtures
@@ -79,4 +78,4 @@ down-mac:
 	docker-compose -f docker-compose.dev.mac.yml down
 
 shell:
-	docker exec -it pet-feeder_php-fpm_1 sh
+	docker exec -it pet-feeder-php sh

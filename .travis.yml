@@ -9,6 +9,7 @@ branches:
   - develop
 
 before_install:
+  - sudo /etc/init.d/mysql stop
   - make jwt-setup
   - make up
 

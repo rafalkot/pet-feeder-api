@@ -1,0 +1,33 @@
+default:
+    extensions:
+        Behat\Symfony2Extension:
+            kernel:
+                bootstrap: tests/Features/bootstrap.php
+                class: App\Kernel
+        Ubirak\RestApiBehatExtension\Extension:
+            rest:
+                base_url: http://nginx
+                store_response: true
+
+    suites:
+        api:
+            paths:    ['%paths.base%/tests/Features']
+            contexts:
+                - Ubirak\RestApiBehatExtension\RestApiContext
+                - Ubirak\RestApiBehatExtension\Json\JsonContext
+                - App\Tests\Features\Context\SchemaContext:
+                    - '@doctrine.orm.entity_manager'
+                - App\Tests\Features\Context\PersonContext:
+                    - '@doctrine.orm.entity_manager'
+                    - '@security.password_encoder'
+                - 'App\Tests\Features\Context\AuthContext':
+                    tokenManager: '@jwt_manager'
+                    persons: '@App\Domain\Persons'
+                - 'App\Tests\Features\Context\HouseholdContext':
+                    households: '@App\Domain\Households'
+                    persons: '@App\Domain\Persons'
+                - 'App\Tests\Features\Context\PetContext':
+                    pets: '@App\Domain\Pets'
+                    persons: '@App\Domain\Persons'
+                - 'App\Tests\Features\Context\TaskContext':
+                    tasks: '@App\Domain\Tasks'

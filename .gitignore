@@ -10,7 +10,7 @@
 .web-server-pid
 ###< symfony/web-server-bundle ###
 ###> behat/symfony2-extension ###
-behat.yml.dist
+behat.yml
 ###< behat/symfony2-extension ###
 
 ###> friendsofphp/php-cs-fixer ###

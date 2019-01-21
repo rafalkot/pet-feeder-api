@@ -17,9 +17,9 @@ install:
   - docker exec -it pet-feeder-php make install
 
 script:
-  - sonar-scanner
   - docker exec -it pet-feeder-php make cs
   - docker exec -it pet-feeder-php make test
+  - sonar-scanner
 
 addons:
   sonarcloud:

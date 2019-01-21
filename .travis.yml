@@ -19,3 +19,8 @@ install:
 script:
   - docker exec -it pet-feeder-php make cs
   - docker exec -it pet-feeder-php make test
+  - sonar-scanner
+
+addons:
+  sonarcloud:
+    organization: "rafalkot-github"

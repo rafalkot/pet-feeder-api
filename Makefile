@@ -56,6 +56,22 @@ test-integration:
 	$(MAKE) db-setup
 	bin/phpunit
 
+test-integration-cov:
+	$(MAKE) db-setup
+	bin/phpunit --coverage-clover var/coverage/integration.xml
+
+test-cov:
+	rm -rf var/coverage
+	mkdir -p var/coverage
+	$(MAKE) test-domain
+	$(MAKE) test-integration-cov
+	$(MAKE) test-api
+	$(MAKE) cov-fix-path
+
+cov-fix-path:
+	sed -i 's|/app/src|src|g' var/coverage/domain.xml
+	sed -i 's|/app/src|src|g' var/coverage/integration.xml
+
 fixtures:
 	bin/console hautelook:fixtures:load -n
 

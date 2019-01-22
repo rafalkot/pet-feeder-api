@@ -37,6 +37,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "friendsofphp/php-cs-fixer": "^2.14",
         "hautelook/alice-bundle": "^2.0",
+        "leanphp/phpspec-code-coverage": "^4.2",
         "phpspec/phpspec": "^4.0",
         "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "^4.0",

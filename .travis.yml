@@ -1,5 +1,8 @@
 language: php
 
+php:
+  - 7.1
+
 services:
   - docker
 
@@ -18,7 +21,7 @@ install:
 
 script:
   - docker exec -it pet-feeder-php make cs
-  - docker exec -it pet-feeder-php make test
+  - docker exec -it pet-feeder-php make test-cov
   - sonar-scanner
 
 addons:

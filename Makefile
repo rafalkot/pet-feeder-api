@@ -64,8 +64,8 @@ test-cov:
 	rm -rf var/coverage
 	mkdir -p var/coverage
 	$(MAKE) test-domain
-	#$(MAKE) test-integration-cov
-	#$(MAKE) test-api
+	$(MAKE) test-integration-cov
+	$(MAKE) test-api
 	$(MAKE) cov-fix-path
 
 cov-fix-path:

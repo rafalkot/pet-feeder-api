@@ -4,3 +4,12 @@ suites:
         spec_prefix: Spec
         namespace: App\Domain
         src_path: ./src
+# @TODO separate file for CI
+extensions:
+    LeanPHP\PhpSpec\CodeCoverage\CodeCoverageExtension:
+        format:
+            - clover
+        output:
+            clover: var/coverage/domain.xml
+        whitelist:
+            - src/Domain

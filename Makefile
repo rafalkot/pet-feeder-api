@@ -66,6 +66,11 @@ test-cov:
 	$(MAKE) test-domain
 	$(MAKE) test-integration-cov
 	$(MAKE) test-api
+	$(MAKE) cov-fix-path
+
+cov-fix-path:
+	sed -i 's|/app/src/Domain|${PWD}/src|g' var/coverage/domain.xml
+	sed -i 's|/app/src|${PWD}/src|g' var/coverage/integration.xml
 
 fixtures:
 	bin/console hautelook:fixtures:load -n

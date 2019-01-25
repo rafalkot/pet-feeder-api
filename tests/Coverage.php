@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace App\Tests;
 
@@ -30,7 +30,7 @@ final class Coverage
     {
         self::$coverage->stop();
 
-        $writer = new \SebastianBergmann\CodeCoverage\Report\Clover;
+        $writer = new \SebastianBergmann\CodeCoverage\Report\Clover();
         $writer->process(
             self::$coverage,
             __DIR__.'/../var/coverage/api/'.self::$id.'.xml'

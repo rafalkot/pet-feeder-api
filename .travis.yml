@@ -13,7 +13,7 @@ branches:
 
 before_install:
   - sudo /etc/init.d/mysql stop
-  - echo "\nCODE_COVERAGE=true" >> .env
+  - echo -e "\nCODE_COVERAGE=true" >> .env
   - make jwt-setup
   - make up
 

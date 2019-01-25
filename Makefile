@@ -62,15 +62,17 @@ test-integration-cov:
 
 test-cov:
 	rm -rf var/coverage
-	mkdir -p var/coverage
+	mkdir -p var/coverage/api
 	$(MAKE) test-domain
 	$(MAKE) test-integration-cov
 	$(MAKE) test-api
+	php bin/clover-merge.php -d var/coverage/api -o var/coverage/api.xml
 	$(MAKE) cov-fix-path
 
 cov-fix-path:
 	sed -i 's|/app/src|src|g' var/coverage/domain.xml
 	sed -i 's|/app/src|src|g' var/coverage/integration.xml
+	sed -i 's|/app/src|src|g' var/coverage/api.xml
 
 fixtures:
 	bin/console hautelook:fixtures:load -n

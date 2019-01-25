@@ -1,6 +1,7 @@
 <?php
 
 use App\Kernel;
+use App\Tests\Coverage;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ if (!isset($_SERVER['APP_ENV'])) {
 
 $env = $_SERVER['APP_ENV'] ?? 'dev';
 $debug = $_SERVER['APP_DEBUG'] ?? ('prod' !== $env);
+$coverage = $_SERVER['CODE_COVERAGE'] ?? false;
 
 if ($debug) {
     umask(0000);
@@ -32,8 +34,16 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
     Request::setTrustedHosts(explode(',', $trustedHosts));
 }
 
+if ($coverage) {
+    Coverage::start();
+}
+
 $kernel = new Kernel($env, $debug);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
+
+if ($coverage) {
+    Coverage::stop();
+}

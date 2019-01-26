@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
+use App\Domain\Exception\InvalidArgumentException;
 use Recurr\Rule;
 
 final class RecurrenceRule
@@ -25,18 +26,9 @@ final class RecurrenceRule
 
     public static function create(\DateTimeImmutable $startDate, string $ruleString)
     {
-        try {
-            new Rule($ruleString, $startDate);
+        $rule = new self($startDate, $ruleString);
 
-            $rule = new self();
-            $rule->startDate = $startDate;
-            $rule->timeZone = $startDate->getTimezone();
-            $rule->ruleString = $ruleString;
-
-            return $rule;
-        } catch (\Exception $ex) {
-            throw new \InvalidArgumentException('Invalid recurrence rule: '.$ex->getMessage(), 0, $ex);
-        }
+        return $rule;
     }
 
     public function startDate(): \DateTimeImmutable
@@ -52,5 +44,24 @@ final class RecurrenceRule
     public function ruleString(): string
     {
         return $this->ruleString;
+    }
+
+    private function __construct(\DateTimeImmutable $startDate, string $ruleString)
+    {
+        $this->validateRuleString($ruleString);
+
+        $this->startDate = $startDate;
+        $this->timeZone = $startDate->getTimezone();
+        $this->ruleString = $ruleString;
+    }
+
+    private function validateRuleString(string $ruleString): void
+    {
+        try {
+            $rule = new Rule();
+            $rule->loadFromString($ruleString);
+        } catch (\Exception $ex) {
+            throw InvalidArgumentException::invalidRecurrenceRule($ruleString, $ex);
+        }
     }
 }

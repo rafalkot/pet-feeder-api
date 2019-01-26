@@ -29,6 +29,10 @@ final class Person implements UserInterface, \Serializable
      */
     private $password;
 
+    private function __construct()
+    {
+    }
+
     public static function register(PersonId $id, string $username, string $email): self
     {
         $person = new self();
@@ -84,8 +88,9 @@ final class Person implements UserInterface, \Serializable
     {
         return serialize(
             [
-                $this->id,
+                $this->id->id(),
                 $this->username,
+                $this->email,
                 $this->password,
             ]
         );
@@ -93,11 +98,12 @@ final class Person implements UserInterface, \Serializable
 
     public function unserialize($serialized)
     {
-        list(
-            $this->id,
-            $this->username,
-            $this->password
-            ) = unserialize($serialized);
+        $unserialized = unserialize($serialized);
+
+        $this->id = PersonId::fromString($unserialized[0]);
+        $this->username = $unserialized[1];
+        $this->email = $unserialized[2];
+        $this->password = $unserialized[3];
     }
 
     private function setUsername(string $username): void

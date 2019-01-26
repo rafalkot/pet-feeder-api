@@ -66,7 +66,7 @@ test-cov:
 	$(MAKE) test-domain
 	$(MAKE) test-integration-cov
 	$(MAKE) test-api
-	php bin/clover-merge.php -d var/coverage/api -o var/coverage/api.xml
+	php bin/merge-api-coverage.php -o var/coverage/api.xml
 	$(MAKE) cov-fix-path
 
 cov-fix-path:

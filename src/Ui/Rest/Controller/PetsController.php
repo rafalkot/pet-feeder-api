@@ -208,7 +208,7 @@ final class PetsController extends RestController
 
         $this->commandBus->dispatch(RemovePet::withId($id->toString()));
 
-        return $this->view();
+        return $this->view(null, 200);
     }
 
     private function petView(string $id): View

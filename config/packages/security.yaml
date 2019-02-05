@@ -15,17 +15,17 @@ security:
             security: false
 
         login:
-            pattern:  ^/api/login
+            pattern:  ^/api/auth/login
             stateless: true
             anonymous: true
             json_login:
-                check_path:               /api/login
+                check_path:               /api/auth/login
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
                 require_previous_session: false
 
         register:
-            pattern:  ^/api/register
+            pattern:  ^/api/persons
             stateless: true
             anonymous: true
             guard:
@@ -48,7 +48,7 @@ security:
             anonymous: true
 
     access_control:
-        - { path: ^/api/login, allow_if: "is_anonymous()"}
-        - { path: ^/api/register, allow_if: "is_anonymous()" }
+        - { path: ^/api/auth/login, allow_if: "is_anonymous()"}
+        - { path: ^/api/persons, allow_if: "is_anonymous()" }
         - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }

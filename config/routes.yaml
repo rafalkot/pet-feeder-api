@@ -1,20 +1,16 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-
-api_login:
-    path: /api/login
-
-register:
-    path: /api/register
-    controller: App\Ui\Rest\Controller\PersonsController::postAction
-    methods: [POST]
+auth_login:
+    path: /api/auth/login
 
 auth_validate_token:
-    path: /api/validateToken
-    controller: App\Ui\Rest\Controller\AuthController::validateTokenAction
-    prefix:  /api
-    methods: [GET]
+  path: /api/auth/validateToken
+  controller: App\Ui\Rest\Controller\AuthController::validateTokenAction
+  prefix:  /api
+  methods: [GET]
+
+register:
+    path: /api/persons
+    controller: App\Ui\Rest\Controller\PersonsController::postAction
+    methods: [POST]
 
 pets:
     type:     rest

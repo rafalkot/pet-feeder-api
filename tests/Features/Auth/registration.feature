@@ -9,7 +9,7 @@ Feature: Registration
     And I add "content-type" header equal to "application/json"
 
   Scenario: Successful registration
-    When I send a POST request to "/api/register" with body:
+    When I send a POST request to "/api/persons" with body:
     """
       {"username": "person2", "password": "password2", "email": "person2@example.com"}
     """
@@ -19,7 +19,7 @@ Feature: Registration
     Then the JSON node "person_id" should exist
 
   Scenario: Trying to register an account with existing email
-    When I send a POST request to "/api/register" with body:
+    When I send a POST request to "/api/persons" with body:
     """
       {"username": "person2", "password": "password2", "email": "person1@example.com"}
     """
@@ -29,7 +29,7 @@ Feature: Registration
     Then the JSON node "errors[0].field" should contain "email"
 
   Scenario: Trying to register an account with existing username
-    When I send a POST request to "/api/register" with body:
+    When I send a POST request to "/api/persons" with body:
     """
       {"username": "person1", "password": "password2", "email": "person2@example.com"}
     """
@@ -40,7 +40,7 @@ Feature: Registration
 
   Scenario: Trying to register an account as logged user
     Given I am authenticated as "person1"
-    When I send a POST request to "/api/register" with body:
+    When I send a POST request to "/api/persons" with body:
     """
       {"username": "person2", "password": "password2", "email": "person2@example.com"}
     """

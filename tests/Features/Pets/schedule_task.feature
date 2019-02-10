@@ -53,10 +53,27 @@ Feature: Scheduling a task
     Then the JSON node "errors[0].field" should contain "pet_id"
 
   Scenario: Completing a task
+    When I send a PUT request to "/api/scheduledtasks/9de30546-0b78-4671-b939-25522741d6bc" with body:
+    """
+      {
+        "completed": true
+      }
+    """
+    Then the response status code should be 200
+
+  Scenario: Incompleting a task
     Given I send a PUT request to "/api/scheduledtasks/9de30546-0b78-4671-b939-25522741d6bc" with body:
     """
       {
         "completed": true
+      }
+    """
+    And I am authenticated as "person1"
+    And I add "content-type" header equal to "application/json"
+    When I send a PUT request to "/api/scheduledtasks/9de30546-0b78-4671-b939-25522741d6bc" with body:
+    """
+      {
+        "completed": false
       }
     """
     Then the response status code should be 200

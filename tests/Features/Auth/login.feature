@@ -9,7 +9,7 @@ Feature: Login
     And I add "content-type" header equal to "application/json"
 
   Scenario: Successful login with correct credentials
-    When I send a POST request to "/api/login" with body:
+    When I send a POST request to "/api/auth/login" with body:
     """
       {"username": "person1", "password": "password1"}
     """
@@ -18,7 +18,7 @@ Feature: Login
     Then the JSON node "token" should exist
 
   Scenario: Trying to login with bad password
-    When I send a POST request to "/api/login" with body:
+    When I send a POST request to "/api/auth/login" with body:
     """
       {"username": "person1", "password": "bad password"}
     """
@@ -26,7 +26,7 @@ Feature: Login
     Then the response status code should be 401
 
   Scenario: Trying to login with bad username and password
-    When I send a POST request to "/api/login" with body:
+    When I send a POST request to "/api/auth/login" with body:
     """
       {"username": "bad username", "password": "bad password"}
     """

@@ -2,6 +2,7 @@
 
 namespace Spec\App\Domain;
 
+use App\Domain\Exception\InvalidArgumentException;
 use App\Domain\RecurrenceRule;
 use PhpSpec\ObjectBehavior;
 
@@ -11,10 +12,13 @@ class RecurrenceRuleSpec extends ObjectBehavior
     {
         $startDate = new \DateTimeImmutable();
 
-        $this->beConstructedThrough('create', [
-            $startDate,
-            'FREQ=DAILY',
-        ]);
+        $this->beConstructedThrough(
+            'create',
+            [
+                $startDate,
+                'FREQ=DAILY',
+            ]
+        );
 
         $this->shouldHaveType(RecurrenceRule::class);
         $this->startDate()->shouldBe($startDate);
@@ -24,11 +28,14 @@ class RecurrenceRuleSpec extends ObjectBehavior
 
     public function it_throws_exception_on_invalid_rrule_string()
     {
-        $this->beConstructedThrough('create', [
-            new \DateTime(),
-            'INVALID_RULE',
-        ]);
+        $this->beConstructedThrough(
+            'create',
+            [
+                new \DateTimeImmutable(),
+                'INVALID_RULE',
+            ]
+        );
 
-        $this->shouldThrow()->duringInstantiation();
+        $this->shouldThrow(InvalidArgumentException::class)->duringInstantiation();
     }
 }

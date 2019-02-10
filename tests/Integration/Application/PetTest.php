@@ -59,6 +59,9 @@ final class PetTest extends ApplicationTestCase
     public function test_register_pets_with_same_name()
     {
         $this->expectException(PetAlreadyExistsException::class);
+        $this->expectExceptionMessage(
+            sprintf('Pet with name "%s" already exists', 'Rocky')
+        );
 
         $ownerId = $this->context->registerPerson('person1', 'person1@example.com', 'password');
         $this->context->registerPet($ownerId->id(), 'dog', 'Rocky');
@@ -68,6 +71,26 @@ final class PetTest extends ApplicationTestCase
             $ownerId->id(),
             'dog',
             'Rocky'
+        );
+
+        $this->context->dispatchCommand($command);
+    }
+
+    public function test_register_pets_with_same_id()
+    {
+        $ownerId = $this->context->registerPerson('person1', 'person1@example.com', 'password');
+        $petId = $this->context->registerPet($ownerId->id(), 'dog', 'Rocky');
+
+        $this->expectException(PetAlreadyExistsException::class);
+        $this->expectExceptionMessage(
+            sprintf('Pet with ID "%s" already exists', $petId->id())
+        );
+
+        $command = RegisterPet::withData(
+            $petId->id(),
+            $ownerId->id(),
+            'dog',
+            'Nelson'
         );
 
         $this->context->dispatchCommand($command);

@@ -23,7 +23,7 @@ final class DbalTaskQuery implements TaskQuery
     public function getTasksByPetAndPersonId(?string $petId, ?string $personId): array
     {
         $query = $this->connection->createQueryBuilder()
-            ->select(['t.*', 'p.name' => 'pet_name'])
+            ->select(['t.*', 'p.name as pet_name'])
             ->from('task', 't')
             ->join('t', 'pet', 'p', 'p.id = t.pet_id');
 

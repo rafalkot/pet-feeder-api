@@ -27,7 +27,7 @@ Feature: Updating a task
     Then the response should be in JSON
     Then the response status code should be 200
     Then the JSON node "id" should be equal to "9de30546-0b78-4671-b939-25522741d6bc"
-    Then the JSON node "name" should be equal to "Walk"
+    Then the JSON node "name" should be equal to "Feed"
     Then the JSON node "time_zone" should be equal to "Europe/Berlin"
     Then the JSON node "recurrence" should be equal to "FREQ=DAILY;BYDAY=MO,TU"
     Then the JSON node "hour" should be equal to "12:00:00"

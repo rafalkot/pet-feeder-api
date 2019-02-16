@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\Time;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-final class TaskForm extends AbstractType implements DataMapperInterface
+final class ScheduleTaskForm extends AbstractType implements DataMapperInterface
 {
     /**
      * @var PersonId

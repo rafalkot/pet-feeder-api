@@ -11,7 +11,6 @@ use App\Domain\PersonId;
 use App\Domain\Persons;
 use App\Domain\PetId;
 use App\Domain\Pets;
-use App\Domain\Task;
 use App\Domain\TaskId;
 use App\Domain\Tasks;
 use Prooph\ServiceBus\CommandBus;
@@ -94,7 +93,7 @@ final class Context
             'name' => $name,
             'time_zone' => 'Europe/Warsaw',
             'hour' => '08:00:00',
-            'recurrence' => $recurrence
+            'recurrence' => $recurrence,
         ]);
 
         $this->dispatchCommand($command);

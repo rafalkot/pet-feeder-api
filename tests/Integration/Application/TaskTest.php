@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Application;
 
 use App\Application\Command\UpdateTask;
+use App\Domain\Exception\TaskDoesNotExistException;
 use App\Domain\PersonId;
 use App\Domain\PetId;
 use App\Domain\TaskId;
-use App\Domain\Exception\TaskDoesNotExistException;
 
 final class TaskTest extends ApplicationTestCase
 {

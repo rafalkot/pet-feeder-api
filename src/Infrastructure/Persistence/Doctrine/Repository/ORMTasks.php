@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
+use App\Domain\Exception\TaskDoesNotExistException;
 use App\Domain\Task;
 use App\Domain\TaskId;
 use App\Domain\Tasks;
@@ -43,7 +44,7 @@ final class ORMTasks implements Tasks
         $task = $this->findById($id);
 
         if (!$task) {
-            throw new \Exception('Invalid task id');
+            throw TaskDoesNotExistException::withId($id);
         }
 
         return $task;

@@ -79,6 +79,31 @@ final class TasksController extends RestController
     /**
      * @SWG\Tag(name="Tasks")
      *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Success",
+     *     @SWG\Schema(
+     *          type="object",
+     *          @SWG\Property(property="id", type="string", example="UUID"),
+     *          @SWG\Property(property="name", type="string", example="Walk"),
+     *          @SWG\Property(property="recurrence", type="string", example="FREQ=DAILY"),
+     *          @SWG\Property(property="hours", type="string", example="08:00:00"),
+     *          @SWG\Property(property="time_zone", type="string", example="Europe\Warsaw"),
+     *          @SWG\Property(property="pet", type="object",
+     *              @SWG\Property(property="id", type="string", example="UUID"),
+     *              @SWG\Property(property="name", type="string", example="Bobby")
+     *          )
+     *     )
+     * )
+     */
+    public function getAction(UuidInterface $id)
+    {
+        return $this->view($this->getTask($id->toString()));
+    }
+
+    /**
+     * @SWG\Tag(name="Tasks")
+     *
      * @SWG\Parameter(
      *     name="body",
      *     in="body",

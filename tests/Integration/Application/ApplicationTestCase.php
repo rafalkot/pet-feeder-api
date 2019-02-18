@@ -6,6 +6,7 @@ namespace App\Tests\Integration\Application;
 
 use App\Infrastructure\Persistence\Doctrine\Repository\ORMPersons;
 use App\Infrastructure\Persistence\Doctrine\Repository\ORMPets;
+use App\Infrastructure\Persistence\Doctrine\Repository\ORMTasks;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
 use Prooph\ServiceBus\CommandBus;
@@ -34,6 +35,7 @@ abstract class ApplicationTestCase extends KernelTestCase
         $this->context = new Context(
             new ORMPersons($this->entityManager),
             new ORMPets($this->entityManager),
+            new ORMTasks($this->entityManager),
             parent::$container->get('prooph_service_bus.my_command_bus')
         );
     }

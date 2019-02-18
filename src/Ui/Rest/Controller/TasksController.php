@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Ui\Rest\Controller;
 
 use App\Application\Command\ScheduleTask;
+use App\Application\Command\UpdateTask;
 use App\Application\Query\TaskQuery;
 use App\Domain\Person;
-use App\Ui\Rest\Form\TaskForm;
+use App\Ui\Rest\Form\ScheduleTaskForm;
+use App\Ui\Rest\Form\UpdateTaskForm;
 use Prooph\ServiceBus\CommandBus;
+use Ramsey\Uuid\UuidInterface;
 use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -115,7 +118,7 @@ final class TasksController extends RestController
         $ownerId = $user->id();
 
         $form = $this->createForm(
-            TaskForm::class,
+            ScheduleTaskForm::class,
             [],
             [
                 'owner_id' => $ownerId,
@@ -127,8 +130,67 @@ final class TasksController extends RestController
         $command = $this->processForm($form, $request);
         $this->commandBus->dispatch($command);
 
-        return $this->view(
-            $this->query->getTaskById($user->id()->id(), $command->taskId()->id())
+        return $this->view($this->getTask($command->taskId()->id()));
+    }
+
+    /**
+     * @SWG\Tag(name="Tasks")
+     *
+     * @SWG\Parameter(
+     *     name="body",
+     *     in="body",
+     *     type="object",
+     *     required=true,
+     *     @SWG\Schema(
+     *          type="object",
+     *          @SWG\Property(property="name", type="string", example="Walk"),
+     *          @SWG\Property(property="recurrence", type="string", example="FREQ=DAILY"),
+     *          @SWG\Property(property="hours", type="string", example="08:00:00"),
+     *          @SWG\Property(property="time_zone", type="string", example="Europe\Warsaw")
+     *     )
+     * )
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Success",
+     *     @SWG\Schema(
+     *          type="object",
+     *          @SWG\Property(property="id", type="string", example="UUID"),
+     *          @SWG\Property(property="name", type="string", example="Walk"),
+     *          @SWG\Property(property="recurrence", type="string", example="FREQ=DAILY"),
+     *          @SWG\Property(property="hours", type="string", example="08:00:00"),
+     *          @SWG\Property(property="time_zone", type="string", example="Europe\Warsaw"),
+     *          @SWG\Property(property="pet", type="object",
+     *              @SWG\Property(property="id", type="string", example="UUID"),
+     *              @SWG\Property(property="name", type="string", example="Bobby")
+     *          )
+     *     )
+     * )
+     */
+    public function putAction(UuidInterface $id, Request $request)
+    {
+        $form = $this->createForm(
+            UpdateTaskForm::class,
+            [],
+            [
+                'task_id' => $id->toString(),
+                'csrf_protection' => false,
+            ]
         );
+
+        /** @var UpdateTask $command */
+        $command = $this->processForm($form, $request);
+        $this->commandBus->dispatch($command);
+
+        return $this->view($this->getTask($id->toString()));
+    }
+
+    private function getTask(string $id)
+    {
+        /** @var Person $user */
+        $user = $this->getUser();
+        $ownerId = $user->id();
+
+        return $this->query->getTaskById($ownerId->id(), $id);
     }
 }

@@ -42,9 +42,19 @@ final class Task
         return $this->name;
     }
 
+    public function rename(string $name): void
+    {
+        $this->setName($name);
+    }
+
     public function recurrenceRule(): RecurrenceRule
     {
         return $this->recurrenceRule;
+    }
+
+    public function updateRecurrenceRule(RecurrenceRule $recurrenceRule): void
+    {
+        $this->recurrenceRule = $recurrenceRule;
     }
 
     private function setName(string $name): void

@@ -73,7 +73,7 @@ final class TasksController extends RestController
         $petId = $request->query->get('pet_id', null);
 
         return $this->view(
-            $this->query->getTasksByPetAndPersonId($petId, (string)$user->id())
+            $this->query->getTasksByPetAndPersonId($petId, (string) $user->id())
         );
     }
 

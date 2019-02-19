@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Application;
 
+use App\Application\Command\RemoveTask;
 use App\Application\Command\UpdateTask;
 use App\Domain\Exception\TaskDoesNotExistException;
 use App\Domain\PersonId;
@@ -82,6 +83,24 @@ final class TaskTest extends ApplicationTestCase
                 'recurrence' => 'FREQ=DAILY;BYDAY=MO,TU',
             ]
         );
+
+        $this->context->dispatchCommand($command);
+    }
+
+    public function test_remove_task()
+    {
+        $command = RemoveTask::withId($this->taskId->id());
+
+        $this->context->dispatchCommand($command);
+
+        $this->assertNull($this->context->tasks()->findById($this->taskId));
+    }
+
+    public function test_remove_task_invalid_id()
+    {
+        $this->expectException(TaskDoesNotExistException::class);
+
+        $command = RemoveTask::withId(TaskId::generate()->id());
 
         $this->context->dispatchCommand($command);
     }

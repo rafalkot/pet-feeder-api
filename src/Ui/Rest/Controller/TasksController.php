@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Ui\Rest\Controller;
 
+use App\Application\Command\RemoveTask;
 use App\Application\Command\ScheduleTask;
 use App\Application\Command\UpdateTask;
 use App\Application\Query\TaskQuery;
@@ -208,6 +209,23 @@ final class TasksController extends RestController
         $this->commandBus->dispatch($command);
 
         return $this->view($this->getTask($id->toString()));
+    }
+
+    /**
+     * @SWG\Tag(name="Tasks")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Success"
+     * )
+     */
+    public function deleteAction(UuidInterface $id)
+    {
+        $this->getTask($id->toString());
+
+        $this->commandBus->dispatch(RemoveTask::withId($id->toString()));
+
+        return $this->view(null, 200);
     }
 
     private function getTask(string $id)

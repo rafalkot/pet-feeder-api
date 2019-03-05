@@ -7,6 +7,7 @@ namespace App\Ui\Rest\Controller;
 use App\Application\Command\RegisterPet;
 use App\Application\Command\RemovePet;
 use App\Application\Command\UpdatePetProfile;
+use App\Application\Query\Model\Pet;
 use App\Application\Query\PetQuery;
 use App\Domain\Person;
 use App\Ui\Rest\Form\PetForm;
@@ -43,13 +44,8 @@ final class PetsController extends RestController
      *     description="Success",
      *     @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(
-     *              @SWG\Property(property="id", type="string", example="UUID"),
-     *              @SWG\Property(property="name", type="string", example="Bobby"),
-     *              @SWG\Property(property="type", type="string", example="cat", enum={"cat", "dog"}),
-     *              @SWG\Property(property="gender", type="string", example="m", enum={"m", "f"}),
-     *              @SWG\Property(property="birth_year", type="int", example=2018),
-     *          )
+     *          @SWG\Items(ref="#/definitions/Pet")
+     *
      *     )
      * )
      */
@@ -69,14 +65,7 @@ final class PetsController extends RestController
      * @SWG\Response(
      *     response=200,
      *     description="Success",
-     *     @SWG\Schema(
-     *          type="object",
-     *          @SWG\Property(property="id", type="string", example="UUID"),
-     *          @SWG\Property(property="name", type="string", example="Bobby"),
-     *          @SWG\Property(property="type", type="string", example="cat", enum={"cat", "dog"}),
-     *          @SWG\Property(property="gender", type="string", example="m", enum={"m", "f"}),
-     *          @SWG\Property(property="birth_year", type="int", example=2018),
-     *     )
+     *     ref="#/definitions/Pet"
      * )
      */
     public function getAction(UuidInterface $id): View
@@ -94,22 +83,14 @@ final class PetsController extends RestController
      *     required=true,
      *     @SWG\Schema(
      *          type="object",
-     *          @SWG\Property(property="name", type="string", example="Bobby"),
-     *          @SWG\Property(property="type", type="string", example="cat", enum={"cat", "dog"})
+     *          ref="#/definitions/PostPetRequest"
      *     )
      * )
      *
      * @SWG\Response(
      *     response=200,
      *     description="Success",
-     *     @SWG\Schema(
-     *          type="object",
-     *          @SWG\Property(property="id", type="string", example="UUID"),
-     *          @SWG\Property(property="name", type="string", example="Bobby"),
-     *          @SWG\Property(property="type", type="string", example="cat", enum={"cat", "dog"}),
-     *          @SWG\Property(property="gender", type="string", example="m", enum={"m", "f"}),
-     *          @SWG\Property(property="birth_year", type="int", example=2018),
-     *     )
+     *     ref="#/definitions/Pet"
      * )
      *
      * @SWG\Response(
@@ -149,24 +130,14 @@ final class PetsController extends RestController
      *     required=true,
      *     @SWG\Schema(
      *          type="object",
-     *          @SWG\Property(property="name", type="string", example="Bobby"),
-     *          @SWG\Property(property="type", type="string", example="cat", enum={"cat", "dog"}),
-     *          @SWG\Property(property="gender", type="string", example="m", enum={"m", "f"}),
-     *          @SWG\Property(property="birth_year", type="int", example=2018)
+     *          ref="#/definitions/PutPetRequest"
      *     )
      * )
      *
      * @SWG\Response(
      *     response=200,
      *     description="Success",
-     *     @SWG\Schema(
-     *          type="object",
-     *          @SWG\Property(property="id", type="string", example="UUID"),
-     *          @SWG\Property(property="name", type="string", example="Bobby"),
-     *          @SWG\Property(property="type", type="string", example="cat", enum={"cat", "dog"}),
-     *          @SWG\Property(property="gender", type="string", example="m", enum={"m", "f"}),
-     *          @SWG\Property(property="birth_year", type="int", example=2018),
-     *     )
+     *     ref="#/definitions/Pet"
      * )
      *
      * @SWG\Response(
@@ -216,7 +187,7 @@ final class PetsController extends RestController
         return $this->view($this->getPet($id));
     }
 
-    private function getPet(string $id)
+    private function getPet(string $id): Pet
     {
         /** @var Person $person */
         $person = $this->getUser();

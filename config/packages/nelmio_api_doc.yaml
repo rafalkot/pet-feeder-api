@@ -14,6 +14,67 @@ nelmio_api_doc:
             security:
                 - api_key: []
         definitions:
+            Uuid:
+                description: "UUID"
+                type: string
+                example: 09fb7c23-f033-4825-9aa7-7b43d5892ae7
+
+            PetType:
+                description: "Pet type"
+                type: string
+                enum:
+                    - dog
+                    - cat
+                example: "cat"
+
+            PetGender:
+                description: "Gender"
+                type: string
+                enum:
+                    - m
+                    - f
+                example: "m"
+
+            Pet:
+                type: object
+                properties:
+                    id:
+                        $ref: "#definitions/Uuid"
+                    name:
+                        type: string
+                        example: Rocky
+                    type:
+                        $ref: "#definitions/PetType"
+                    gender:
+                        $ref: "#definitions/PetGender"
+                    birthYear:
+                        type: int
+                        example: 2017
+
+            PostPetRequest:
+                type: object
+                properties:
+                    name:
+                        type: string
+                        example: Rocky
+                    type:
+                        $ref: "#definitions/PetType"
+
+            PutPetRequest:
+                type: object
+                properties:
+                    name:
+                        type: string
+                        example: Rocky
+                    type:
+                        $ref: "#definitions/PetType"
+                    gender:
+                        $ref: "#definitions/PetGender"
+                    birthYear:
+                        type: int
+                        example: 2017
+
+
             ValidationError:
                 description: "Single validation error object"
                 type: object
@@ -24,6 +85,7 @@ nelmio_api_doc:
                     message:
                         type: string
                         example: Field error
+
             ValidationErrorResponse:
                 description: "Response for validation errors"
                 type: object

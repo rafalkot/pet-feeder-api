@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Persistence\Doctrine\Query;
 
 use App\Application\Exception\NotFoundException;
+use App\Application\Query\Model\Pet;
 use App\Application\Query\PetQuery;
 use Doctrine\DBAL\Connection;
 
@@ -32,7 +33,7 @@ final class DbalPetQuery implements PetQuery
         return array_map([$this, 'normalize'], $this->connection->fetchAll($query->getSQL(), $query->getParameters()));
     }
 
-    public function getPetById(string $personId, string $id): array
+    public function getPetById(string $personId, string $id): Pet
     {
         $query = $this->connection->createQueryBuilder()
             ->select(['*'])
@@ -50,10 +51,15 @@ final class DbalPetQuery implements PetQuery
         return $this->normalize($pet);
     }
 
-    private function normalize(array $data): array
+    private function normalize(array $data): Pet
     {
-        $data['birth_year'] = null === $data['birth_year'] ? null : (int) ($data['birth_year']);
+        $pet = new Pet();
+        $pet->id = $data['id'];
+        $pet->name = $data['name'];
+        $pet->gender = $data['gender'];
+        $pet->type = $data['type'];
+        $pet->birthYear = null === $data['birth_year'] ? null : (int) ($data['birth_year']);
 
-        return $data;
+        return $pet;
     }
 }

@@ -67,6 +67,11 @@ final class PetsController extends RestController
      *     description="Success",
      *     ref="#/definitions/Pet"
      * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     ref="#/definitions/NotFoundErrorResponse"
+     * )
      */
     public function getAction(UuidInterface $id): View
     {
@@ -144,6 +149,11 @@ final class PetsController extends RestController
      *     response=400,
      *     ref="#/definitions/ValidationErrorResponse"
      * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     ref="#/definitions/NotFoundErrorResponse"
+     * )
      */
     public function putAction(UuidInterface $id, Request $request): View
     {
@@ -171,6 +181,11 @@ final class PetsController extends RestController
      * @SWG\Response(
      *     response=200,
      *     description="Success"
+     * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     ref="#/definitions/NotFoundErrorResponse"
      * )
      */
     public function deleteAction(UuidInterface $id): View

@@ -101,6 +101,16 @@ nelmio_api_doc:
                         items:
                             $ref: "#definitions/ValidationError"
 
+            NotFoundErrorResponse:
+                description: "Error 404"
+                type: object
+                properties:
+                    code:
+                        type: int
+                        example: 404
+                    message:
+                        type: string
+                        example: Not found
 
     areas: # to filter documented areas
         path_patterns:

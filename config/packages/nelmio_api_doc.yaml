@@ -47,9 +47,20 @@ nelmio_api_doc:
                         $ref: "#definitions/PetType"
                     gender:
                         $ref: "#definitions/PetGender"
-                    birthYear:
+                    birth_year:
                         type: int
                         example: 2017
+
+            SimplePet:
+                type: object
+                properties:
+                    id:
+                        $ref: "#definitions/Uuid"
+                    name:
+                        type: string
+                        example: Rocky
+                    type:
+                        $ref: "#definitions/PetType"
 
             PostPetRequest:
                 type: object
@@ -70,10 +81,64 @@ nelmio_api_doc:
                         $ref: "#definitions/PetType"
                     gender:
                         $ref: "#definitions/PetGender"
-                    birthYear:
+                    birth_year:
                         type: int
                         example: 2017
 
+            Task:
+                type: object
+                properties:
+                    id:
+                        $ref: "#definitions/Uuid"
+                    name:
+                        type: string
+                        example: Walk
+                    recurrence:
+                        type: string
+                        description: "String in RRULE format"
+                        example: "FREQ=DAILY"
+                    hour:
+                        type: string
+                        example: "08:00:00"
+                    time_zone:
+                        type: string
+                        example: "Europe\\Warsaw"
+                    pet:
+                        $ref: "#definitions/SimplePet"
+            PostTaskRequest:
+                type: object
+                properties:
+                    pet_id:
+                        $ref: "#definitions/Uuid"
+                    name:
+                        type: string
+                        example: Walk
+                    recurrence:
+                        type: string
+                        description: "String in RRULE format"
+                        example: "FREQ=DAILY"
+                    hour:
+                        type: string
+                        example: "08:00:00"
+                    time_zone:
+                        type: string
+                        example: "Europe\\Warsaw"
+            PutTaskRequest:
+                type: object
+                properties:
+                    name:
+                        type: string
+                        example: Walk
+                    recurrence:
+                        type: string
+                        description: "String in RRULE format"
+                        example: "FREQ=DAILY"
+                    hour:
+                        type: string
+                        example: "08:00:00"
+                    time_zone:
+                        type: string
+                        example: "Europe\\Warsaw"
 
             ValidationError:
                 description: "Single validation error object"

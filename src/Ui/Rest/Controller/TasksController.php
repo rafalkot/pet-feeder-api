@@ -7,6 +7,7 @@ namespace App\Ui\Rest\Controller;
 use App\Application\Command\RemoveTask;
 use App\Application\Command\ScheduleTask;
 use App\Application\Command\UpdateTask;
+use App\Application\Query\Model\Task;
 use App\Application\Query\TaskQuery;
 use App\Domain\Person;
 use App\Ui\Rest\Form\ScheduleTaskForm;
@@ -53,15 +54,7 @@ final class TasksController extends RestController
      *     @SWG\Schema(
      *          type="array",
      *          @SWG\Items(
-     *              @SWG\Property(property="id", type="string", example="UUID"),
-     *              @SWG\Property(property="name", type="string", example="Walk"),
-     *              @SWG\Property(property="recurrence", type="string", example="FREQ=DAILY"),
-     *              @SWG\Property(property="hours", type="string", example="08:00:00"),
-     *              @SWG\Property(property="time_zone", type="string", example="Europe\Warsaw"),
-     *              @SWG\Property(property="pet", type="object",
-     *                  @SWG\Property(property="id", type="string", example="UUID"),
-     *                  @SWG\Property(property="name", type="string", example="Bobby")
-     *              )
+     *              ref="#/definitions/Task"
      *          )
      *     )
      * )
@@ -83,18 +76,12 @@ final class TasksController extends RestController
      * @SWG\Response(
      *     response=200,
      *     description="Success",
-     *     @SWG\Schema(
-     *          type="object",
-     *          @SWG\Property(property="id", type="string", example="UUID"),
-     *          @SWG\Property(property="name", type="string", example="Walk"),
-     *          @SWG\Property(property="recurrence", type="string", example="FREQ=DAILY"),
-     *          @SWG\Property(property="hours", type="string", example="08:00:00"),
-     *          @SWG\Property(property="time_zone", type="string", example="Europe\Warsaw"),
-     *          @SWG\Property(property="pet", type="object",
-     *              @SWG\Property(property="id", type="string", example="UUID"),
-     *              @SWG\Property(property="name", type="string", example="Bobby")
-     *          )
-     *     )
+     *     ref="#/definitions/Task"
+     * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     ref="#/definitions/NotFoundErrorResponse"
      * )
      */
     public function getAction(UuidInterface $id)
@@ -112,29 +99,19 @@ final class TasksController extends RestController
      *     required=true,
      *     @SWG\Schema(
      *          type="object",
-     *          @SWG\Property(property="pet_id", type="string", example="UUID"),
-     *          @SWG\Property(property="name", type="string", example="Walk"),
-     *          @SWG\Property(property="recurrence", type="string", example="FREQ=DAILY"),
-     *          @SWG\Property(property="hours", type="string", example="08:00:00"),
-     *          @SWG\Property(property="time_zone", type="string", example="Europe\Warsaw")
+     *          ref="#/definitions/PostTaskRequest"
      *     )
      * )
      *
      * @SWG\Response(
      *     response=200,
      *     description="Success",
-     *     @SWG\Schema(
-     *          type="object",
-     *          @SWG\Property(property="id", type="string", example="UUID"),
-     *          @SWG\Property(property="name", type="string", example="Walk"),
-     *          @SWG\Property(property="recurrence", type="string", example="FREQ=DAILY"),
-     *          @SWG\Property(property="hours", type="string", example="08:00:00"),
-     *          @SWG\Property(property="time_zone", type="string", example="Europe\Warsaw"),
-     *          @SWG\Property(property="pet", type="object",
-     *              @SWG\Property(property="id", type="string", example="UUID"),
-     *              @SWG\Property(property="name", type="string", example="Bobby")
-     *          )
-     *     )
+     *     ref="#/definitions/Task"
+     * )
+     *
+     * @SWG\Response(
+     *     response=400,
+     *     ref="#/definitions/ValidationErrorResponse"
      * )
      */
     public function postAction(Request $request)
@@ -169,28 +146,24 @@ final class TasksController extends RestController
      *     required=true,
      *     @SWG\Schema(
      *          type="object",
-     *          @SWG\Property(property="name", type="string", example="Walk"),
-     *          @SWG\Property(property="recurrence", type="string", example="FREQ=DAILY"),
-     *          @SWG\Property(property="hours", type="string", example="08:00:00"),
-     *          @SWG\Property(property="time_zone", type="string", example="Europe\Warsaw")
+     *          ref="#/definitions/PutTaskRequest"
      *     )
      * )
      *
      * @SWG\Response(
      *     response=200,
      *     description="Success",
-     *     @SWG\Schema(
-     *          type="object",
-     *          @SWG\Property(property="id", type="string", example="UUID"),
-     *          @SWG\Property(property="name", type="string", example="Walk"),
-     *          @SWG\Property(property="recurrence", type="string", example="FREQ=DAILY"),
-     *          @SWG\Property(property="hours", type="string", example="08:00:00"),
-     *          @SWG\Property(property="time_zone", type="string", example="Europe\Warsaw"),
-     *          @SWG\Property(property="pet", type="object",
-     *              @SWG\Property(property="id", type="string", example="UUID"),
-     *              @SWG\Property(property="name", type="string", example="Bobby")
-     *          )
-     *     )
+     *     ref="#/definitions/Task"
+     * )
+     *
+     * @SWG\Response(
+     *     response=400,
+     *     ref="#/definitions/ValidationErrorResponse"
+     * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     ref="#/definitions/NotFoundErrorResponse"
      * )
      */
     public function putAction(UuidInterface $id, Request $request)
@@ -218,6 +191,11 @@ final class TasksController extends RestController
      *     response=200,
      *     description="Success"
      * )
+     *
+     * @SWG\Response(
+     *     response=404,
+     *     ref="#/definitions/NotFoundErrorResponse"
+     * )
      */
     public function deleteAction(UuidInterface $id)
     {
@@ -228,7 +206,7 @@ final class TasksController extends RestController
         return $this->view(null, 200);
     }
 
-    private function getTask(string $id)
+    private function getTask(string $id): Task
     {
         /** @var Person $user */
         $user = $this->getUser();
